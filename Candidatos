@@ -1,0 +1,110 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <string.h>
+#define len 15
+struct candidato
+{
+  char nome[30];
+  float nota;
+};
+typedef struct candidato Candidato;
+
+void cadastrar(Candidato c[len])
+{
+  int i;
+  char nome[50];
+
+  for (i = 0; i < len; i++)
+  {
+    printf("Nome: ");
+    fflush(stdin);
+    gets(nome);
+    strcpy((c[i].nome), nome);
+    printf("Nota: ");
+    scanf("%f", &c[i].nota);
+  }
+  system("cls");
+}
+
+void mediageral(Candidato c[len])
+{
+  float mediag, somag = 0;
+  int i;
+  for (i = 0; i < len; i++)
+  {
+    somag += c[i].nota;
+  }
+  mediag = somag / len;
+
+  printf("Media geral: %.1f\n",mediag);
+}
+
+void imprimir(Candidato c[len])
+{
+  int i;
+  for (i = 0; i < len; i++)
+  {
+    printf("--------------------------------------\n");
+    printf("Nome:\t%s\n", c[i].nome);
+    printf("Nota: \t%.1f\n", c[i].nota);
+  }
+  printf("--------------------------------------\n");
+}
+void maioremenor(Candidato c[len])
+{
+  char nomemaior[30], nomemenor[30];
+  float notamaior, notamenor;
+  int i;
+  for (i = 0; i < len; i++)
+  {
+    if (i == 0)
+    {
+      notamaior = c[i].nota;
+      strcpy(nomemaior, c[i].nome);
+      notamenor = c[i].nota;
+      strcpy(nomemenor, c[i].nome);
+    }
+    if (notamaior < c[i].nota)
+    {
+      notamaior = c[i].nota;
+      strcpy(nomemaior, c[i].nome);
+    }
+    if (notamenor > c[i].nota)
+    {
+      notamenor = c[i].nota;
+      strcpy(nomemenor, c[i].nome);
+    }
+  }
+  printf("A maior nota foi do candidato %s\nCom %.1f pontos.\n", nomemaior, notamaior);
+  printf("A menor nota foi do candidato %s\nCom %.1f pontos.\n", nomemenor, notamenor);
+}
+
+int main()
+{
+  Candidato c[len];
+  int op;
+  cadastrar(c);
+  do
+  {
+    printf("1 - Imprimir notas e nomes\n2 - Exibir media geral\n3 - Cadidatos com maior e menor nota\n0 - Sair\nDigite sua opcao: ");
+    scanf("%d",&op);
+    switch (op)
+    {
+    case 1:
+      imprimir(c);
+      break;
+    case 2:
+      mediageral(c);
+      break;
+    case 3:
+      maioremenor(c);
+      break;
+    
+    default:
+      break;
+    }
+  } while (op > 0 && op < 4);
+  printf("fim do programa!");
+  return 0;
+}
